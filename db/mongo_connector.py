@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 from local_settings import MONGO_CONFIG
 
+
 # подключение к MongoDB
 def get_mongo_client():
     try:

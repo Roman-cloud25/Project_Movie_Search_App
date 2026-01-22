@@ -39,3 +39,37 @@ body {
     background-color: #f8f9fa;
     border: 1px solid #eef0f2;
 }
+
+/* Стиль для метки ЖАНР */
+.badge-genre {
+    background-color: #e8f5e9 !important; /* Очень светло-зеленый */
+    color: #2e7d32 !important;           /* Темно-зеленый текст */
+    border: 1px solid #a5d6a7 !important;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+/* Стиль для метки ФИЛЬМ */
+.badge-movie {
+    background-color: #e3f2fd !important; /* Очень светло-синий */
+    color: #1565c0 !important;           /* Темно-синий текст */
+    border: 1px solid #90caf9 !important;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+/* Общий стиль для выпадающего списка */
+.dropdown-menu {
+    border-radius: 15px !important;
+    overflow: hidden;
+}
+
+.dropdown-item-text {
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item-text:hover {
+    background-color: #f8f9fa;
+}

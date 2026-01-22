@@ -1,2 +1,137 @@
-# Project_Movie_Search_App
-An interactive console application for searching movies in MySQL database with the ability to log all search queries to MongoDB.
+# Веб-приложение для поиска фильмов (FastAPI + MySQL + MongoDB)
+Веб-приложение для поиска фильмов по базе Sakila (MySQL)
+с логированием пользовательских запросов и статистикой в MongoDB.
+
+Проект реализован с использованием FastAPI, Jinja2, Bootstrap 
+и построен по принципу разделения ответственности (Separation of Concerns).
+
+# Функциональные возможности
+
+# Поиск фильмов
+- По названию фильма (регистронезависимый)
+- По жанру
+- По диапазону годов выпуска
+- Поддержка поиска по первой букве
+- Автоматическая очистка пробелов во вводе
+- Ограничение вывода: 10 фильмов на страницу
+- Пагинация результатов
+
+# Статистика запросов (MongoDB)
+- 5 самых популярных запросов
+- 5 последних уникальных запросов
+- Хранение:
+  - времени запроса
+  - типа запроса
+  - количества найденных фильмов
+
+# Детальная страница фильма
+- Название
+- Описание
+- Жанр
+- Год выпуска
+- Рейтинг
+- Длительность
+- Особенности фильма
+
+# Логирование
+- Логирование вызовов функций через декоратор
+- Логи приложения и ошибок в отдельных `.log` файлах
+
+# Архитектура проекта
+Проект разделён на логические уровни:
+- Работа с БД — MySQL и MongoDB
+- Web-уровень — FastAPI, маршруты
+- Бизнес-логика — поиск, пагинация, статистика
+- UI — HTML + Bootstrap
+- Инфраструктура — логирование, обработка ошибок
+
+# Структура проекта
+ films/
+├── db/
+│ ├── mysql_connector.py  # Подключение к MySQL (sakila)
+│ └── mongo_connector.py  # Подключение к MongoDB
+│
+├── routes/
+│ └── movie_routes.py     # HTTP-маршруты FastAPI
+│
+├── services/
+│ ├── search_service.py   # Поиск фильмов (бизнес-логика)
+│ ├── mongo_logger.py     # Статистика и логирование запросов
+│ └── pagination.py       # Пагинация
+│
+├── utils/
+│ ├── decorators.py       # Декораторы логирования
+│ ├── validators.py       # Проверка пользовательского ввода
+│ ├── logger.py           # Настройка логов
+│ └── error_handlers.py   # Обработка ошибок
+│
+├── templates/
+│ ├── base_page.html      # Базовый шаблон
+│ ├── home.html           # Главная страница
+│ ├── movie_details.html  # Детали фильма
+│ └── error.html          # Страница ошибки
+│
+├── static/
+│ ├── bootstrap/          # Bootstrap CSS/JS
+│ └── css/style.css       # Пользовательские стили
+│
+├── logs/
+│ ├── app.log             # Лог приложения
+│ └── errors.log          # Лог ошибок
+│
+├── main.py               # Точка входа FastAPI
+├── local_settings_example.py # Пример конфигурации
+├── requirements.txt
+└── README.md
+
+# Установка и запуск
+
+# 1. Клонировать проект
+git clone https://github.com/your_username/film-search-app.git
+cd film-search-app
+
+# 2. Установить зависимости
+pip install -r requirements.txt
+
+# 3. Создать local_settings.py
+На основе local_settings_example.py
+
+# 3. Запуск приложения
+uvicorn main:app --reload
+Открыть в браузере: http://127.0.0.1:8000
+
+Используемые технологии
+Python 3.10+
+FastAPI
+Jinja2
+MySQL (sakila)
+MongoDB
+PyMySQL
+Bootstrap 5
+
+Пользовательский интерфейс (UI)
+Технологии
+Bootstrap 5
+Bootstrap Icons
+Jinja2
+Google Fonts (Poppins)
+Особенности UI
+Одна главная страница (Single Page Search UX)
+
+Верхнее меню:
+  Популярные запросы
+  Недавние поиски
+
+Карточки фильмов:
+жанр
+год
+описание
+
+Кино-стилистика:
+тёмные оттенки
+золотые акценты
+плавные hover-эффекты
+
+Автор
+Roman Serhatyi
+Учебный проект для демонстрации навыков backend-разработки

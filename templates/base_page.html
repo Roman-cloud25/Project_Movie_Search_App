@@ -8,10 +8,45 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Стили для меток типов поиска в истории */
+        .badge-movie {
+            background-color: #e3f2fd !important; /* Мягкий синий */
+            color: #0d6efd !important;           /* Яркий синий текст */
+            border: 1px solid #90caf9 !important;
+            font-size: 0.65rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-genre {
+            background-color: #e8f5e9 !important; /* Мягкий зеленый */
+            color: #198754 !important;           /* Яркий зеленый текст */
+            border: 1px solid #a5d6a7 !important;
+            font-size: 0.65rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-menu {
+            border-radius: 15px !important;
+            border: none !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+        }
+
+        .dropdown-item-text {
+            transition: background-color 0.2s ease;
+        }
+
+        .dropdown-item-text:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 mb-4 shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
             <span class="me-2">🎬</span> ФИЛЬМЫ
@@ -22,22 +57,24 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav ms-auto">
 
                 <li class="nav-item dropdown ms-lg-3">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-graph-up-arrow me-1"></i> Популярное
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0"
-                        style="min-width: 350px; border-radius: 12px;">
+                    <ul class="dropdown-menu dropdown-menu-end p-2" style="min-width: 300px;">
                         {% if popular_stats %}
                         {% for item in popular_stats %}
                         <li class="dropdown-item-text border-bottom py-2">
                             <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge bg-primary-subtle text-primary px-2 py-1">
-                        {# Показываем только поисковое слово или жанр #}
-                        {{ item._id.params.keyword or item._id.params.genre or "Общий поиск" }}
-                    </span>
+                                <div class="d-flex flex-column">
+                                    <span class="fw-bold text-dark">{{ item.title or "Общий поиск" }}</span>
+                                    <span class="badge {% if item.type == 'keyword' %}badge-movie{% else %}badge-genre{% endif %} mt-1"
+                                          style="width: fit-content;">
+                                            {% if item.type == 'keyword' %}ФИЛЬМ{% else %}ЖАНР{% endif %}
+                                        </span>
+                                </div>
                                 <small class="text-muted">Запросов: <strong>{{ item.count }}</strong></small>
                             </div>
                         </li>
@@ -49,28 +86,26 @@
                 </li>
 
                 <li class="nav-item dropdown ms-lg-2">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-clock-history me-1"></i> Недавние
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0"
-                        style="min-width: 350px; border-radius: 12px;">
+                    <ul class="dropdown-menu dropdown-menu-end p-2" style="min-width: 300px;">
                         {% if recent_stats %}
                         {% for item in recent_stats %}
                         <li class="dropdown-item-text border-bottom py-2">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                    <span class="badge bg-primary-subtle text-primary px-2 py-1">
-                        {{ item.params.keyword or item.params.genre or "Все фильмы" }}
-                    </span>
+                                <div class="d-flex flex-column">
+                                    <span class="fw-bold text-dark">{{ item.title or "Все фильмы" }}</span>
+                                    <span class="badge {% if item.type == 'keyword' %}badge-movie{% else %}badge-genre{% endif %} mt-1"
+                                          style="width: fit-content;">
+                                            {% if item.type == 'keyword' %}ФИЛЬМ{% else %}ЖАНР{% endif %}
+                                        </span>
+                                </div>
                                 <small class="text-muted" style="font-size: 0.7rem;">
-                                    <i class="bi bi-clock me-1"></i>{{ item.timestamp.strftime('%H:%M') }}
+                                    <i class="bi bi-clock me-1"></i>{{ item.timestamp.strftime('%H:%M') if
+                                    item.timestamp else '' }}
                                 </small>
                             </div>
-                            {# Если есть диапазон лет, показываем его мелким шрифтом ниже #}
-                            {% if item.params.from or item.params.to %}
-                            <div class="text-muted" style="font-size: 0.75rem;">
-                                Период: {{ item.params.from }} — {{ item.params.to }}
-                            </div>
-                            {% endif %}
                         </li>
                         {% endfor %}
                         {% else %}
@@ -78,7 +113,7 @@
                         {% endif %}
                     </ul>
                 </li>
-
+            </ul>
         </div>
     </div>
 </nav>
@@ -87,7 +122,7 @@
     {% block content %}{% endblock %}
 </main>
 
-<footer class="text-center py-5 text-muted">
+<footer class="text-center py-5 text-muted border-top mt-5">
     <p>Copyright &copy; 2026 Roman Serhatyi</p>
 </footer>
 

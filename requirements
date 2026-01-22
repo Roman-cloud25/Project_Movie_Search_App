@@ -1,0 +1,7 @@
+```txt
+fastapi
+uvicorn
+jinja2
+pymysql
+pymongo
+python-dotenv

@@ -16,6 +16,8 @@ def get_mysql_connection():
             connect_timeout=2,
             read_timeout=5
         )
+        conn.ping(reconnect=True)
+        return conn
     except MySQLError as e:
         print(f"Ошибка подключения к SQL: {e}")
         raise
