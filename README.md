@@ -46,6 +46,7 @@
 - Инфраструктура — логирование, обработка ошибок
 
 # Структура проекта
+```
  films/
 ├── db/
 │ ├── mysql_connector.py  # Подключение к MySQL (sakila)
@@ -83,11 +84,12 @@
 ├── local_settings_example.py # Пример конфигурации
 ├── requirements.txt
 └── README.md
+```
 
 # Установка и запуск
 
 # 1. Клонировать проект
-git clone https://github.com/your_username/film-search-app.git
+git clone https://github.com/Roman-cloud25/Project_Movie_Search_App
 cd film-search-app
 
 # 2. Установить зависимости
@@ -100,7 +102,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 Открыть в браузере: http://127.0.0.1:8000
 
-Используемые технологии
+# Используемые технологии
 Python 3.10+
 FastAPI
 Jinja2
@@ -109,7 +111,7 @@ MongoDB
 PyMySQL
 Bootstrap 5
 
-Пользовательский интерфейс (UI)
+# Пользовательский интерфейс (UI)
 Технологии
 Bootstrap 5
 Bootstrap Icons
@@ -132,6 +134,7 @@ Google Fonts (Poppins)
 золотые акценты
 плавные hover-эффекты
 
-Автор
+# Автор
 Roman Serhatyi
-Учебный проект для демонстрации навыков backend-разработки
+Учебный проект "Веб-приложение для поиска фильмов" 
+для демонстрации навыков backend-разработки
